@@ -49,8 +49,8 @@ function startTimer() {
     interval = parseInt(intervalInput.value);
 
     // Validate the interval value
-    if (isNaN(interval) || interval < 1 || interval > 60) {
-        alert("Please enter a valid number between 1 and 60.");
+    if (isNaN(interval) || interval < 1) {
+        alert("Please enter a valid number.");
         return;
     }
 
