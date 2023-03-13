@@ -6,3 +6,5 @@ The timer is set to a default interval of 5 seconds, which will reset automatica
 
 - To get started, simply press the 'start' button and follow the prompts for inhaling and exhaling. 
 - You can also adjust the interval time or pause, reset, or sound an alert when the timer reaches zero. I hope you find this tool helpful in your mindfulness practice!
+
+Visit the webpage here, https://rpuvvula.github.io/simple-timer/
