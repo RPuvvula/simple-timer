@@ -1,0 +1,19 @@
+ /* Add some style for your webpage */
+ body {
+    font-family: Arial;
+    text-align: center;
+}
+
+#timer {
+    font-size: 5em;
+    margin-top: 50px;
+}
+
+#buttons {
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1.5em;
+}
