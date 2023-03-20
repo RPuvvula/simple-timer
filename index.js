@@ -11,8 +11,7 @@ var interval; // The interval value in seconds
 var duration; // The duration value in milliseconds
 var remaining; // The remaining time in milliseconds
 var countdown; // The countdown object returned by setInterval()
-let startTime; // The start time of the timer
-let endTime; // The end time of the timer
+let timerRepeated = 0;
 
 // Define a function that formats a number into two digits
 function formatNumber(number) {
@@ -47,22 +46,22 @@ function updateTimer() {
     }
 }
 
-// Update duration display with formatted time
+// Update total duration
 function updateDurationDisplay() {
+    interval = parseInt(intervalInput.value);
     // Calculate the elapsed time
-    var elapsedTime = Date.now() - startTime;
+    const elapsedTime = ((timerRepeated * interval) * 1000);
 
     // Calculate the minutes and seconds from the elapsed time
     var minutes = Math.floor(elapsedTime / 60000);
     var seconds = Math.floor((elapsedTime % 60000) / 1000);
-
     // Format and display the duration value
     var durationValue = formatNumber(minutes) + ":" + formatNumber(seconds);
     durationDisplay.textContent = durationValue;
 }
 
 // Define a function that starts the timer
-function startTimer() {
+function startTimer(autoStarted = true) {
     // Get the interval value from the input element
     interval = parseInt(intervalInput.value);
 
@@ -70,6 +69,10 @@ function startTimer() {
     if (isNaN(interval) || interval < 1) {
         alert("Please enter a valid number.");
         return;
+    }
+
+    if (autoStarted) {
+        timerRepeated += 1;
     }
 
     // Convert the interval value to milliseconds
@@ -93,6 +96,7 @@ function startTimer() {
         // Set the time delay to one second
         1000);
 }
+
 // Define a function that pauses the timer
 function pauseTimer() {
     // Check if the countdown is running
@@ -134,9 +138,10 @@ function playSound() {
 
 // Add event listeners to the buttons
 startButton.addEventListener("click", () => {
-    // Set the start time of the timer
-    startTime = Date.now();
-    startTimer();
+    startTimer(false);
 });
 pauseButton.addEventListener("click", pauseTimer);
-resetButton.addEventListener("click", resetTimer);
+resetButton.addEventListener("click", () => {
+    timerRepeated = 0;
+    resetTimer();
+});
