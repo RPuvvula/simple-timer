@@ -4,12 +4,15 @@ var timerDisplay = document.getElementById("timer");
 var startButton = document.getElementById("start");
 var pauseButton = document.getElementById("pause");
 var resetButton = document.getElementById("reset");
+const durationDisplay = document.getElementById("duration");
 
 // Declare some variables for storing the timer values
 var interval; // The interval value in seconds
 var duration; // The duration value in milliseconds
 var remaining; // The remaining time in milliseconds
 var countdown; // The countdown object returned by setInterval()
+let startTime; // The start time of the timer
+let endTime; // The end time of the timer
 
 // Define a function that formats a number into two digits
 function formatNumber(number) {
@@ -25,6 +28,7 @@ function updateTimer() {
     // Format and display the timer value
     var timerValue = formatNumber(minutes) + ":" + formatNumber(seconds);
     timerDisplay.textContent = timerValue;
+    updateDurationDisplay();
 
     // Check if the timer has reached zero
     if (remaining === 0) {
@@ -41,6 +45,20 @@ function updateTimer() {
         // Start the timer again
         startTimer();
     }
+}
+
+// Update duration display with formatted time
+function updateDurationDisplay() {
+    // Calculate the elapsed time
+    var elapsedTime = Date.now() - startTime;
+
+    // Calculate the minutes and seconds from the elapsed time
+    var minutes = Math.floor(elapsedTime / 60000);
+    var seconds = Math.floor((elapsedTime % 60000) / 1000);
+
+    // Format and display the duration value
+    var durationValue = formatNumber(minutes) + ":" + formatNumber(seconds);
+    durationDisplay.textContent = durationValue;
 }
 
 // Define a function that starts the timer
@@ -115,6 +133,10 @@ function playSound() {
 }
 
 // Add event listeners to the buttons
-startButton.addEventListener("click", startTimer);
+startButton.addEventListener("click", () => {
+    // Set the start time of the timer
+    startTime = Date.now();
+    startTimer();
+});
 pauseButton.addEventListener("click", pauseTimer);
 resetButton.addEventListener("click", resetTimer);

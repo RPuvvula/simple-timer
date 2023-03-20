@@ -4,9 +4,13 @@
     text-align: center;
 }
 
-#timer {
+#timer, #duration {
     font-size: 5em;
     margin-top: 50px;
+}
+
+#duration {
+    font-size: 2em;
 }
 
 #buttons {
