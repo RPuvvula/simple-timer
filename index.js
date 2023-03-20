@@ -11,7 +11,7 @@ var interval; // The interval value in seconds
 var duration; // The duration value in milliseconds
 var remaining; // The remaining time in milliseconds
 var countdown; // The countdown object returned by setInterval()
-let timerRepeated = 0;
+let totalSeconds = 0;
 
 // Define a function that formats a number into two digits
 function formatNumber(number) {
@@ -27,7 +27,6 @@ function updateTimer() {
     // Format and display the timer value
     var timerValue = formatNumber(minutes) + ":" + formatNumber(seconds);
     timerDisplay.textContent = timerValue;
-    updateDurationDisplay();
 
     // Check if the timer has reached zero
     if (remaining === 0) {
@@ -46,22 +45,8 @@ function updateTimer() {
     }
 }
 
-// Update total duration
-function updateDurationDisplay() {
-    interval = parseInt(intervalInput.value);
-    // Calculate the elapsed time
-    const elapsedTime = ((timerRepeated * interval) * 1000);
-
-    // Calculate the minutes and seconds from the elapsed time
-    var minutes = Math.floor(elapsedTime / 60000);
-    var seconds = Math.floor((elapsedTime % 60000) / 1000);
-    // Format and display the duration value
-    var durationValue = formatNumber(minutes) + ":" + formatNumber(seconds);
-    durationDisplay.textContent = durationValue;
-}
-
 // Define a function that starts the timer
-function startTimer(autoStarted = true) {
+function startTimer() {
     // Get the interval value from the input element
     interval = parseInt(intervalInput.value);
 
@@ -69,10 +54,6 @@ function startTimer(autoStarted = true) {
     if (isNaN(interval) || interval < 1) {
         alert("Please enter a valid number.");
         return;
-    }
-
-    if (autoStarted) {
-        timerRepeated += 1;
     }
 
     // Convert the interval value to milliseconds
@@ -91,10 +72,17 @@ function startTimer(autoStarted = true) {
 
         // Update the timer display
         updateTimer();
+        //Total duration of the timer
+        updateTotalDuration();
 
     },
         // Set the time delay to one second
         1000);
+
+    function updateTotalDuration() {
+        totalSeconds += 1;
+        durationDisplay.textContent = formatNumber(Math.floor(totalSeconds / 60)) + ":" + formatNumber(totalSeconds % 60);
+    }
 }
 
 // Define a function that pauses the timer
@@ -137,11 +125,9 @@ function playSound() {
 }
 
 // Add event listeners to the buttons
-startButton.addEventListener("click", () => {
-    startTimer(false);
-});
+startButton.addEventListener("click", startTimer);
 pauseButton.addEventListener("click", pauseTimer);
 resetButton.addEventListener("click", () => {
-    timerRepeated = 0;
+    totalSeconds = 0;
     resetTimer();
 });
